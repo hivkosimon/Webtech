@@ -23,7 +23,6 @@ if(isset($_POST['row'])&& isset($_POST['col'])&& isset($_POST['year'])&& isset($
     $mesiac = intval($_POST['month']);
     $idnepritomnost = intval($_POST['idnepr']);
 
-    $datum = $rok.$mesiac.$col;
 
 
 
@@ -34,7 +33,7 @@ if(isset($_POST['row'])&& isset($_POST['col'])&& isset($_POST['year'])&& isset($
 
 
 
-    $sql = "INSERT INTO dochadzka (datum, id_pracovnik, id_nepritomnost) VALUES (".$datum.", ".$idpracovnika.", ".$idnepritomnost.")";
+    $sql = "INSERT INTO dochadzka (den, mesiac, rok, id_pracovnik, id_nepritomnost) VALUES (".$col.", ".$mesiac.", ".$rok.", ".$idpracovnika.", ".$idnepritomnost.")";
 
     return $dbh->exec($sql);
 }

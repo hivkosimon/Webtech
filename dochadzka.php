@@ -2,7 +2,7 @@
 
 class  dochadzka
 {
-    protected $id, $datum, $id_pracovnik, $id_nepritomnost;
+    protected $id, $den, $mesiac, $rok, $id_pracovnik, $id_nepritomnost;
 
     /**
      * @return mixed
@@ -23,18 +23,51 @@ class  dochadzka
     /**
      * @return mixed
      */
-    public function getDatum()
+    public function getDen()
     {
-        return $this->datum;
+        return $this->den;
     }
 
     /**
-     * @param mixed $datum
+     * @param mixed $den
      */
-    public function setDatum($datum)
+    public function setDen($den)
     {
-        $this->datum = $datum;
+        $this->den = $den;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMesiac()
+    {
+        return $this->mesiac;
+    }
+
+    /**
+     * @param mixed $mesiac
+     */
+    public function setMesiac($mesiac)
+    {
+        $this->mesiac = $mesiac;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRok()
+    {
+        return $this->rok;
+    }
+
+    /**
+     * @param mixed $rok
+     */
+    public function setRok($rok)
+    {
+        $this->rok = $rok;
+    }
+
 
     /**
      * @return mixed

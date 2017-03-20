@@ -9,6 +9,35 @@ require 'functions.php';
         <meta charset="utf-8">
         <meta name="author" content="Šimon Hivko">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <style>
+            th {                background-color: darkgray;
+            }
+            .meno_pracovnika{
+                background-color: darkgray;
+            }
+
+            .PN{
+                background-color: red;
+
+            }
+            .OCR{
+                background-color: green;
+
+            }
+            .sluzobna_cesta{
+                background-color: blue;
+
+            }
+            .dovolenka{
+                background-color: yellow;
+
+            }
+            .plan_dovolenky{
+                background-color: black;
+
+            }
+        </style>
+
     </head>
     <body>
 
@@ -17,8 +46,9 @@ require 'functions.php';
             $people = fetchPracovnik($dbh);
             $dochadzka = fetchDochadzka($dbh);
 
-           // print_r($dochadzka);
-           // print_r($people);
+           //print_r($dochadzka);
+           //print_r($people);
+            //echo $dochadzka[0]->getRok();
 
             ?>
 
@@ -102,16 +132,51 @@ require 'functions.php';
                     </tr>
 
                 <?php
-                foreach ($people as $clovek) :?>
-                    <tr>
-                        <th class="meno_pracovnika"> <?php echo $clovek->getMeno() . " " .  $clovek->getPriezvisko();?><th>
-                            <?php for($y=1;$y<$pocetDniMesiaca;$y++){
-                                echo "<td>    </td>";
-                            }
+                foreach ($people as $clovek) {
+                    echo "<tr>";
 
-                            ?>
-                    </tr>
-                <?php endforeach?>
+
+                    echo "<th class='meno_pracovnika'>" . $clovek->getMeno() . " " . $clovek->getPriezvisko() . "</th>";
+                    for ($y = 1; $y <=$pocetDniMesiaca; $y++) {
+                        $nasiel_som = 0;
+                        foreach ($dochadzka as $zaznam) {
+
+
+                            $ddd = $zaznam->getIdPracovnik();
+                            //echo $ddd." |";
+                            // echo $mesiac;
+                            if (($zaznam->getIdPracovnik() == $clovek->getId()) && ($zaznam->getMesiac() == $mesiac) && ($zaznam->getRok() == $rok) && ($zaznam->getDen() == $y)) {
+
+                                $nasiel_som = 1;
+
+                                switch ($zaznam->getIdNepritomnost()) {
+                                    case "1":
+                                        echo "<td class='PN'> ".$y ." </td>";
+                                        break;
+                                    case "2":
+                                        echo "<td class='OCR'> ".$y ." </td>";
+                                        break;
+                                    case "3":
+                                        echo "<td class='sluzobna_cesta'> ".$y ." </td>";
+                                        break;
+                                    case "4":
+                                        echo "<td class='dovolenka'> ".$y ." </td>";
+                                    // break;
+                                    case "5":
+                                        echo "<td class='plan_dovoenky'> ".$y ." </td>";
+                                        break;
+                                }
+
+                            }
+                            //else{
+                            // echo "<td>  aaaa  </td>";}
+                        }
+                        if ($nasiel_som == 0) {
+                            echo "<td>".$y ."</td>";
+                        }
+                    }
+                    echo "</tr>";
+                } ?>
                 </table>
 
             </div>
@@ -127,11 +192,11 @@ require 'functions.php';
 
                 $('td').click(function() {
 
-                    if(n=="PN"){ $(this).css('backgroundColor', 'red');}
-                    if(n=="OCR"){ $(this).css('backgroundColor', 'green');}
-                    if(n=="sluzobna_cesta"){ $(this).css('backgroundColor', 'blue');}
-                    if(n=="dovolenka"){ $(this).css('backgroundColor', 'yellow');}
-                    if(n=="plan_dovoenky"){ $(this).css('backgroundColor', 'black');}
+                    if(n=="PN"){ $(this).attr("class","PN");}
+                    if(n=="OCR"){ $(this).attr("class","PN");}
+                    if(n=="sluzobna_cesta"){ $(this).attr("class","PN");}
+                    if(n=="dovolenka"){ $(this).attr("class","PN");}
+                    if(n=="plan_dovoenky"){ $(this).attr("class","PN");}
                     
 
                     var col = this.cellIndex;
